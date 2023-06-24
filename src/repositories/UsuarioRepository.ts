@@ -11,8 +11,40 @@ export class UsuarioRepository
     super(Usuario);
   }
 
-  async findAll(): Promise<Usuario[]> {
-    return await this._repository.find();
+  async findAll(page: number = 1, limit: number = 10, usuario: string): Promise<Usuario[]> {
+    const query = this._repository
+      .createQueryBuilder("usuario")
+      .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
+      .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
+      .take(limit)
+      .skip((page - 1) * limit);
+
+    if (usuario) {
+      query.where("LOWER(usuario.usuario) LIKE LOWER(:usuario)", {
+        usuario: `%${usuario}%`,
+      });
+    }
+
+    const usuarios = await query.getMany();
+
+    return usuarios;
+  }
+
+  async count(page: number = 1, limit: number = 10, usuario: string): Promise<number> {
+    const query = this._repository
+      .createQueryBuilder("usuario")
+      .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
+      .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
+      .take(limit)
+      .skip((page - 1) * limit);
+
+    if (usuario) {
+      query.where("LOWER(usuario.usuario) LIKE LOWER(:usuario)", {
+        usuario: `%${usuario}%`,
+      });
+    }
+
+    return query.getCount();
   }
 
   async findById(id: number): Promise<Usuario | undefined> {

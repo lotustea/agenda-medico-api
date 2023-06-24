@@ -6,8 +6,25 @@ import { ApiResponse } from "../responses/ApiResponse";
 import { paginationValidation } from "../validations/paginationValidation";
 import { Request, Response } from "express";
 import { UsuarioDTO } from "../dto/UsuarioDto";
+import { ListarUsuariosUseCase } from "useCases/Usuario/ListarUsuariosUsecase";
 
 class UsuarioController {
+  async index(req: Request, res: Response) {
+    try {
+      await paginationValidation.validate(req.query);
+      const { page = 1, limit = 10, usuario = null } = req.query;
+      const listarUsuariosUseCase = await new ListarUsuariosUseCase().execute(
+        page as number,
+        limit as number,
+        usuario as string
+      );
+
+      return ApiResponse.success(res, listarUsuariosUseCase);
+    } catch (error: any) {
+      return ApiResponse.error(res, error.errors);
+    }
+  }
+   
   async create(req: Request, res: Response) {
     try {
       const data = req.body;
