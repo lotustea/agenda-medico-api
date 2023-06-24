@@ -9,7 +9,7 @@ const MedicoRoutes = express.Router();
 /**
  * Retorna a lista de medicos
  * @route GET /api/medico
- * @group Usuário - listar
+ * @group Medico - listar
  * @param {integer} page.query - Número da página
  * @param {integer} limit.query - Limite de resultados por página
  * @param {string} nome.query - Nome do medico (filtro - opcional)

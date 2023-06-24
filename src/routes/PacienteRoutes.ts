@@ -10,7 +10,7 @@ const PacienteRoutes = express.Router();
 /**
  * Retorna a lista de pacientes
  * @route GET /api/paciente
- * @group Usuário - listar
+ * @group Paciente - listar
  * @param {integer} page.query - Número da página
  * @param {integer} limit.query - Limite de resultados por página
  * @param {string} nome.query - Nome do paciente (filtro - opcional)

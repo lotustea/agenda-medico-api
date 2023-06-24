@@ -2,9 +2,22 @@ import * as express from "express";
 import UsuarioController from "../api/controllers/UsuarioController";
 const UsuarioRoutes = express.Router();
 
+
 /**
- * Rota Usuário - Cadastrar
+ * Rotas Usuário
  */
+/**
+ * Retorna a lista de usuarios
+ * @route GET /api/usuario
+ * @group Usuário - listar
+ * @param {integer} page.query - Número da página
+ * @param {integer} limit.query - Limite de resultados por página
+ * @param {string} usuario.query - Nome de usuario (filtro - opcional)
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+UsuarioRoutes.get("/", UsuarioController.index);
 
 /**
  * Cadastrar um novo usuário

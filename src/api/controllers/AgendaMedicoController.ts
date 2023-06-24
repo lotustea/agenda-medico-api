@@ -2,6 +2,11 @@ import { ApiResponse } from "../responses/ApiResponse";
 import { paginationValidation } from "../validations/paginationValidation";
 import { Request, Response } from "express";
 import { ListarAgendasUseCase} from "../../useCases/AgendaMedico/ListarAgendasUsecase";
+import { AgendaMedicoDTO } from "../dto/AgendaMedicoDto";
+import { CadastrarAgendamentoUseCase } from "../../useCases/AgendaMedico/CadastrarAgendamentoUsecase";
+import { AlterarAgendamentoUseCase } from "../../useCases/AgendaMedico/AlterarAgendamentoUsecase";
+import { alterarAgendamentoValidation } from "../validations/AgendaMedico/alterarAgendamentoValidation";
+import { cadastrarAgendamentoValidation } from "../validations/AgendaMedico/cadastrarAgendamentoValidation";
 
 class AgendaMedicoController {
   async index(req: Request, res: Response) {
@@ -16,6 +21,39 @@ class AgendaMedicoController {
       );
 
       return ApiResponse.success(res, listarAgendaMedicosUseCase);
+    } catch (error: any) {
+      return ApiResponse.error(res, error.errors);
+    }
+  }
+
+  async create(req: Request, res: Response) {
+    try {
+      const data = req.body;
+      await cadastrarAgendamentoValidation.validate(data);
+
+      const dto = new AgendaMedicoDTO(data).toEntity();
+      const cadastrarAgendamentoUseCase =
+        await new CadastrarAgendamentoUseCase().execute(dto);
+
+      return ApiResponse.success(res, cadastrarAgendamentoUseCase);
+    } catch (error: any) {
+      return ApiResponse.error(res, error.errors);
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const data = req.body;
+      const id = req.params.id as unknown as number;
+      await alterarAgendamentoValidation.validate(data);
+
+      const dto = new AgendaMedicoDTO(data).toEntity();
+      const alterarAgendamentoUseCase = await new AlterarAgendamentoUseCase().execute(
+        id,
+        dto
+      );
+
+      return ApiResponse.success(res, alterarAgendamentoUseCase);
     } catch (error: any) {
       return ApiResponse.error(res, error.errors);
     }

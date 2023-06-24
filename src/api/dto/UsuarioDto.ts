@@ -1,4 +1,4 @@
-import { IUsuario } from './../../entities/interfaces/IUsuario';
+import { IUsuario } from '../../entities/interfaces/IUsuario';
 import { IPessoaFisica } from '../../entities/interfaces/IPessoaFisica';
 import { IEndereco } from '../../entities/interfaces/IEndereco';
 

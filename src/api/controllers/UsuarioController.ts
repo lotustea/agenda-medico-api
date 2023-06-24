@@ -5,7 +5,7 @@ import { CadastrarUsuarioUseCase } from "../../useCases/Usuario/CadastrarUsuario
 import { ApiResponse } from "../responses/ApiResponse";
 import { paginationValidation } from "../validations/paginationValidation";
 import { Request, Response } from "express";
-import { UsuarioDTO } from "../dto/UsuarioDto";
+import { UsuarioDTO } from "../dto/UsuarioDTO";
 import { ListarUsuariosUseCase } from "useCases/Usuario/ListarUsuariosUsecase";
 
 class UsuarioController {

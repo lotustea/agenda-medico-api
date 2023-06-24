@@ -78,6 +78,15 @@ export class AgendaMedicoRepository extends BaseRepository<AgendaMedico> impleme
       .getOne();
   }
 
+  async findByMedicoAndData(medicoId: number, dataAgendamento: Date): Promise<AgendaMedico | undefined> {
+    return await this._repository
+      .createQueryBuilder("agendaMedico")
+      .leftJoinAndSelect("agendaMedico.medico", "medico")
+      .where("medico.id = :medicoId", { medicoId })
+      .andWhere("agendaMedico.dataAgendamento = :dataAgendamento", { dataAgendamento })
+      .getOne();
+  }
+
   async create(agendaMedico: IAgendaMedico): Promise<AgendaMedico> {
     return await this._repository.save(agendaMedico);
   }

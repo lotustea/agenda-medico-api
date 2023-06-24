@@ -20,4 +20,30 @@ const AgendaMedicoRoutes = express.Router();
  */
 AgendaMedicoRoutes.get("/", AgendaMedicoController.index);
 
+/**
+ * Cadastrar um novo agendamento
+ * @route POST /api/agenda/cadastrar
+ * @group AgendaMedico - Criar
+ * @param {number} pacienteId.body.required - ID do paciente
+ * @param {number} medicoId.body.required - ID do medico
+ * @param {Date} dataAgendamento.body.required - Data e hora do agendamento
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+AgendaMedicoRoutes.post("/", AgendaMedicoController.index);
+
+/**
+ * Atualiza os dados de um agendamento
+ * @route PUT /api/agenda/{id}/alterar
+ * @group AgendaMedico - Atualizar
+ * @param {integer} id.path.required - ID do agendamento
+ * @param {number} pacienteId.body- ID do paciente
+ * @param {number} medicoId.body - ID do medico
+ * @param {Date} dataAgendamento.body- Data e hora do agendamento
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ */
+AgendaMedicoRoutes.put("/:id/alterar", AgendaMedicoController.update);
+
 export { AgendaMedicoRoutes };
