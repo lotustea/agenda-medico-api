@@ -1,0 +1,35 @@
+version: '3'
+services:
+  db:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'agenda-medico'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./docker/db_data:/var/lib/mysql
+
+  app:
+    image: node:18.15.0
+    command: sh -c 'npm install && npm run dev'
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - '3333:3333'
+    depends_on:
+      - db
+    working_dir: /usr/src/app
+    environment:
+      - DATABASE_URL=mysql://root:root@db:3306/agenda-medico
+      - DB_HOST=db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+      - DB_NAME=agenda-medico
+      - APP_AMBIENT=dev
+volumes:
+  db_data:

@@ -1,0 +1,4 @@
+/node_modules
+/dist
+/docker
+package-lock.json
