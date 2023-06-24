@@ -1,17 +1,18 @@
-import { PessoaFisica } from "entities/PessoaFisica";
+import { PessoaFisica } from "../entities/PessoaFisica";
 import { Usuario } from "../entities/Usuario";
 import { UsuarioRepository } from "../repositories/UsuarioRepository";
-import { IUsuario } from "entities/interfaces/IUsuario";
+import { IUsuario } from "../entities/interfaces/IUsuario";
 import { PessoaFisicaService } from "./PessoaFisicaService";
 
 export class UsuarioService {
-  constructor(
-    private usuarioRepository: UsuarioRepository,
-    private pessoaFisicaService: PessoaFisicaService
-    ) {}
+  private usuarioRepository = new UsuarioRepository();
+  private pessoaFisicaService = new PessoaFisicaService();
 
   async criarUsuario(usuarioData: IUsuario, pessoaFisica: PessoaFisica) {
-    const pessoaFisicaSalva = await this.pessoaFisicaService.criarPessoaFisica(pessoaFisica, pessoaFisica.endereco);
+    const pessoaFisicaSalva = await this.pessoaFisicaService.criarPessoaFisica(
+      pessoaFisica,
+      pessoaFisica.endereco
+    );
 
     const usuario = new Usuario();
     usuario.usuario = usuarioData.usuario;

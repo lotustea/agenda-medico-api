@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateCol
 import { Usuario } from './Usuario';
 import { IPaciente } from './interfaces/IPaciente';
 
-@Entity()
+@Entity('paciente')
 export class Paciente implements IPaciente {
     @PrimaryGeneratedColumn()
     id: number;

@@ -17,7 +17,7 @@ app.get("/", async (_req, res) => {
   res.send("Server running on port 3333");
 });
 
-/*app.use("/api", Routes);*/
+app.use("/api", Routes);
 
 app.use((error: any, _req: any, res: any, _next: any) => {
   if(error?.unauthorized){

@@ -1,35 +1,9 @@
 import * as express from "express";
-import expressSwaggerGenerator from "express-swagger-generator";
+import { UsuarioRoutes } from "./UsuarioRoutes";
 
 const Routes = express.Router();
 
-
-const expressSwagger = expressSwaggerGenerator(Routes);
-const options = {
-  swaggerDefinition: {
-    info: {
-      description: "API - Agenda Medico",
-      title: "Swagger",
-      version: "1.0.0",
-    },
-    host: "localhost:3333",
-    basePath: "/api/",
-    produces: ["application/json"],
-    consumes: ["application/json"],
-    schemes: ["http", "https"],
-    securityDefinitions: {
-      JWT: {
-        type: "apiKey",
-        in: "header",
-        name: "Authorization",
-        description: "",
-      },
-    },
-  },
-  basedir: __dirname,
-  files: ["/*.ts", "/*.js"]
-};
-expressSwagger(options);
+Routes.use("/usuario", UsuarioRoutes);
 
 
 export { Routes };

@@ -2,15 +2,13 @@ import { PessoaFisica } from "../entities/PessoaFisica";
 import { Endereco } from "../entities/Endereco";
 import { PessoaFisicaRepository } from "../repositories/PessoaFisicaRepository";
 import { EnderecoRepository } from "../repositories/EnderecoRepository";
-import { IPessoaFisica } from "entities/interfaces/IPessoaFisica";
-import { IEndereco } from "entities/interfaces/IEndereco";
+import { IPessoaFisica } from "../entities/interfaces/IPessoaFisica";
+import { IEndereco } from "../entities/interfaces/IEndereco";
 
 export class PessoaFisicaService {
-  constructor(
-    private pessoaFisicaRepository: PessoaFisicaRepository,
-    private enderecoRepository: EnderecoRepository
-  ) {}
-
+  private pessoaFisicaRepository = new PessoaFisicaRepository();
+  private enderecoRepository = new EnderecoRepository();
+  
   async criarPessoaFisica(pessoaFisicaData: IPessoaFisica, enderecoData: IEndereco) {
     const endereco = new Endereco();
     endereco.logradouro = enderecoData.logradouro;
