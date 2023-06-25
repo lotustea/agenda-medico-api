@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Exclude } from 'class-transformer';
 import { PessoaFisica } from './PessoaFisica';
 import { IUsuario } from './interfaces/IUsuario';
 
@@ -11,7 +10,6 @@ export class Usuario implements IUsuario {
     @Column()
     usuario: string;
 
-    @Exclude()
     @Column()
     senha: string;
 

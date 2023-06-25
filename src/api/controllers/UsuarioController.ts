@@ -12,6 +12,10 @@ import { Usuario } from '../../entities/Usuario';
 import { ExcluirAgendamentoUsuarioUseCase } from '../../useCases/Usuario/ExcluirAgendamentoUsuarioUsecase';
 import { loginUsuarioValidation } from '../validations/Usuario/loginUsuarioValidation';
 import { LoginUsuarioUseCase } from '../../useCases/Usuario/LoginUsuarioUsecase';
+import { gerarTokenRecuperarSenhaValidation } from '../validations/Usuario/gerarTokenRecuperarSenhaValidation';
+import { GerarTokenRecuperarSenhaUseCase } from '../../useCases/RecuperarSenha/GerarTokenRecuperarSenhaUseCase';
+import { RecuperarSenhaUseCase } from 'useCases/Usuario/RecuperarSenhaUsuarioUseCase';
+import { recuperarSenhaValidation } from '../validations/Usuario/recuperarSenhaValidation';
 
 class UsuarioController {
     async index(req: Request, res: Response) {
@@ -72,6 +76,34 @@ class UsuarioController {
                 await new LoginUsuarioUseCase().execute(data.usuario, data.senha);
 
             return ApiResponse.success(res, loginUsuarioUsecase);
+        } catch (error: any) {
+            return ApiResponse.error(res, error.errors);
+        }
+    }
+
+    async gerarTokenRecuperarSenha(req: Request, res: Response) {
+        try {
+            const data = req.body;
+            await gerarTokenRecuperarSenhaValidation.validate(data);
+
+            const gerarTokenRecuperarSenhaUsecase =
+                await new GerarTokenRecuperarSenhaUseCase().execute(data.usuario);
+
+            return ApiResponse.success(res, gerarTokenRecuperarSenhaUsecase);
+        } catch (error: any) {
+            return ApiResponse.error(res, error.errors);
+        }
+    }
+
+    async recuperarSenha(req: Request, res: Response) {
+        try {
+            const data = req.body;
+            await recuperarSenhaValidation.validate(data);
+
+            const recuperarSenhaUsecase =
+                await new RecuperarSenhaUseCase().execute(data.usuario, data.token, data.senha);
+
+            return ApiResponse.success(res, recuperarSenhaUsecase);
         } catch (error: any) {
             return ApiResponse.error(res, error.errors);
         }

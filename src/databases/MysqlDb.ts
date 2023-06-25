@@ -20,11 +20,12 @@ export class MySQLDb {
     password: process.env.DB_PASSWORD,
     port: +process.env.DB_PORT || 3306,
     database: process.env.DB_NAME,
-    synchronize: true,
-    logging: true,
+    synchronize: false,
+    logging: false,
     entities: process.env.APP_AMBIENT === 'dev' ? srcConfig.entities : distConfig.entities,
     migrations: process.env.APP_AMBIENT === 'dev' ? srcConfig.migrations : distConfig.migrations,
     subscribers: [],
+    migrationsRun: false
   });
 
   static async getConnection(): Promise<DataSource> {
@@ -43,4 +44,4 @@ MySQLDb.dataSource.initialize()
     console.error("Mysql DB - TypeOrm error", err);
   });
 
-  export default MySQLDb.dataSource;
+export default MySQLDb.dataSource;

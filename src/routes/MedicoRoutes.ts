@@ -1,6 +1,6 @@
 import * as express from "express";
 import MedicoController from "../api/controllers/MedicoController";
-import { authMiddleware } from "../api/middlewares/AuthMiddleware";
+import { authMiddleware } from "../api/middlewares/authMiddleware";
 
 const MedicoRoutes = express.Router();
 

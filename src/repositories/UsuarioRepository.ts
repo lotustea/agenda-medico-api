@@ -66,6 +66,7 @@ export class UsuarioRepository
     async findByUsuario(usuario: string): Promise<Usuario | undefined> {
         return await this._repository
             .createQueryBuilder("usuario")
+            .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
             .where("usuario.usuario = :usuario", { usuario })
             .getOne();
     }

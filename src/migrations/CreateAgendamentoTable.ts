@@ -1,4 +1,4 @@
-import {MigrationInterface, QueryRunner, Table} from "typeorm";
+import { MigrationInterface, QueryRunner, Table } from "typeorm";
 
 export class CreateAgendamentoTable1624546098806 implements MigrationInterface {
 
@@ -15,7 +15,7 @@ export class CreateAgendamentoTable1624546098806 implements MigrationInterface {
             ],
             foreignKeys: [
                 { columnNames: ['medico_id'], referencedColumnNames: ['id'], referencedTableName: 'medico' },
-                { columnNames: ['paciente_id'], referencedColumnNames: ['id'], referencedTableName: 'usuario' },
+                { columnNames: ['paciente_id'], referencedColumnNames: ['id'], referencedTableName: 'paciente' },
             ],
         }));
     }

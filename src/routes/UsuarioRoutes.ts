@@ -1,6 +1,6 @@
 import * as express from "express";
 import UsuarioController from "../api/controllers/UsuarioController";
-import { authMiddleware } from "../api/middlewares/AuthMiddleware";
+import { authMiddleware } from "../api/middlewares/authMiddleware";
 
 const UsuarioRoutes = express.Router();
 
@@ -54,6 +54,30 @@ UsuarioRoutes.post("/cadastrar", UsuarioController.create);
  * @returns {object} 500 - Erro interno
  */
 UsuarioRoutes.post("/login", UsuarioController.login);
+
+/**
+ * Gerar token recuperar senha usuário
+ * @route POST /api/usuario/gerarTokenRecuperarSenha
+ * @group Usuário - Gerar token recuperar senha
+ * @param {string} usuario.body.required - Usuário
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+UsuarioRoutes.post("/gerarTokenRecuperarSenha", UsuarioController.gerarTokenRecuperarSenha);
+
+/**
+ * Recuperar senha usuário
+ * @route POST /api/usuario/recuperarSenha
+ * @group Usuário - Recuperar senha
+ * @param {string} usuario.body.required - Usuário
+ * @param {string} token.body.required - Token recebido por email
+ * @param {string} senha.body.required - Nova senha
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+UsuarioRoutes.post("/recuperarSenha", UsuarioController.recuperarSenha);
 
 /**
  * Atualiza os dados de um usuário

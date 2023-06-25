@@ -1,6 +1,6 @@
 import * as express from "express";
 import AgendaMedicoController from "../api/controllers/AgendaMedicoController";
-import { authMiddleware } from "../api/middlewares/AuthMiddleware";
+import { authMiddleware } from "../api/middlewares/authMiddleware";
 
 const AgendaMedicoRoutes = express.Router();
 

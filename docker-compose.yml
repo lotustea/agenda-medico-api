@@ -12,6 +12,17 @@ services:
       - '3306'
     volumes:
       - ./docker/db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p'root'"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - '1025:1025'
+      - '8025:8025'
 
   app:
     image: node:18.15.0
@@ -23,6 +34,7 @@ services:
       - '3333:3333'
     depends_on:
       - db
+      - mailhog
     working_dir: /usr/src/app
     environment:
       - DATABASE_URL=mysql://root:root@db:3306/agenda-medico
@@ -32,5 +44,7 @@ services:
       - DB_NAME=agenda-medico
       - APP_AMBIENT=dev
       - APP_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFQUCBBUEkgQUdFTkRBIE1FRElDTyIsImlhdCI6MTUxNjIzOTAyMn0.Ik9fZ7ozogersyWtiXi5naJv7WkRRL-4w0A0yIelKDc
+      - MAIL_HOST=mailhog
+      - MAIL_PORT=1025
 volumes:
   db_data:

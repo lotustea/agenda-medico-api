@@ -1,6 +1,6 @@
 import * as express from "express";
 import PacienteController from "../api/controllers/PacienteController";
-import { authMiddleware } from "../api/middlewares/AuthMiddleware";
+import { authMiddleware } from "../api/middlewares/authMiddleware";
 
 const PacienteRoutes = express.Router();
 

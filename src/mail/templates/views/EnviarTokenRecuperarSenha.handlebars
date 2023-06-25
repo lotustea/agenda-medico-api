@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperação de senha</title>
+    <style>
+        body: {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="border: 1px solid black;  width: 100%">
+        <div style="padding:30px;">
+            {{>header}}
+            <p style="font-family: Verdana;">Olá {{name}}</p>
+            <br>
+            <p
+                style="font-weight: 100; font-size: 16px ; line-height: 37px;  font-family: Verdana; color: #1C1E3A; font-family: Verdana;">
+                Você solicitou a recuperação de senha. Utilize o token abaixo para criar uma nova senha:</p>
+            <br>
+            <div>
+                <p
+                    style="text-align: left; font-weight: 100; font-size: 20px ; line-height: 57px;  font-family: Verdana; margin: 0px;">
+                    Token:</p>
+                <p
+                    style="text-align: left; font-weight: 100; font-size: 50px ; line-height: 57px;  font-family: Verdana;  margin: 0px;">
+                    {{token}}</p>
+            </div>
+            <br>
+            <br>
+            <p
+                style="font-weight: 100; font-size: 16px ; line-height: 37px;  font-family: Verdana; color: #1C1E3A; font-family: Verdana;">
+                O token expirará em {{tokenExpirationTime}} minutos.</p>
+            <br>
+        </div>
+        {{>footer}}
+
+    </div>
+</body>
+
+</html>
