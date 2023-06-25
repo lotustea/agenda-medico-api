@@ -1,4 +1,4 @@
-import * as express from "express";
+import express from "express";
 import { UsuarioRoutes } from "./UsuarioRoutes";
 import { MedicoRoutes } from "./MedicoRoutes";
 import { PacienteRoutes } from "./PacienteRoutes";

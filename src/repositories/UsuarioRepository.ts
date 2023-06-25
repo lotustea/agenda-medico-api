@@ -63,6 +63,13 @@ export class UsuarioRepository
             .getOne();
     }
 
+    async findByUsuario(usuario: string): Promise<Usuario | undefined> {
+        return await this._repository
+            .createQueryBuilder("usuario")
+            .where("usuario.usuario = :usuario", { usuario })
+            .getOne();
+    }
+
     async create(usuario: Usuario): Promise<Usuario> {
         return await this._repository.save(usuario);
     }

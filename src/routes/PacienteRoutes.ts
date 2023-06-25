@@ -1,5 +1,6 @@
 import * as express from "express";
 import PacienteController from "../api/controllers/PacienteController";
+import { authMiddleware } from "../api/middlewares/AuthMiddleware";
 
 const PacienteRoutes = express.Router();
 
@@ -18,6 +19,6 @@ const PacienteRoutes = express.Router();
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-PacienteRoutes.get("/", PacienteController.index);
+PacienteRoutes.get("/", authMiddleware, PacienteController.index);
 
 export { PacienteRoutes };

@@ -1,5 +1,6 @@
 import * as express from "express";
 import AgendaMedicoController from "../api/controllers/AgendaMedicoController";
+import { authMiddleware } from "../api/middlewares/AuthMiddleware";
 
 const AgendaMedicoRoutes = express.Router();
 
@@ -18,7 +19,7 @@ const AgendaMedicoRoutes = express.Router();
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-AgendaMedicoRoutes.get("/", AgendaMedicoController.index);
+AgendaMedicoRoutes.get("/", authMiddleware, AgendaMedicoController.index);
 
 /**
  * Cadastrar um novo agendamento
@@ -31,7 +32,7 @@ AgendaMedicoRoutes.get("/", AgendaMedicoController.index);
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-AgendaMedicoRoutes.post("/", AgendaMedicoController.index);
+AgendaMedicoRoutes.post("/", authMiddleware, AgendaMedicoController.index);
 
 /**
  * Atualiza os dados de um agendamento
@@ -44,7 +45,7 @@ AgendaMedicoRoutes.post("/", AgendaMedicoController.index);
  * @security JWT
  * @returns {object} 200 - Resposta de sucesso
  */
-AgendaMedicoRoutes.put("/:id/alterar", AgendaMedicoController.update);
+AgendaMedicoRoutes.put("/:id/alterar", authMiddleware, AgendaMedicoController.update);
 
 /**
  * Exclui um agendamento
@@ -54,6 +55,6 @@ AgendaMedicoRoutes.put("/:id/alterar", AgendaMedicoController.update);
  * @security JWT
  * @returns {object} 200 - Resposta de sucesso
  */
-AgendaMedicoRoutes.delete("/:id/excluir", AgendaMedicoController.delete);
+AgendaMedicoRoutes.delete("/:id/excluir", authMiddleware, AgendaMedicoController.delete);
 
 export { AgendaMedicoRoutes };

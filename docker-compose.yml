@@ -31,5 +31,6 @@ services:
       - DB_PASSWORD=root
       - DB_NAME=agenda-medico
       - APP_AMBIENT=dev
+      - APP_SECRET=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFQUCBBUEkgQUdFTkRBIE1FRElDTyIsImlhdCI6MTUxNjIzOTAyMn0.Ik9fZ7ozogersyWtiXi5naJv7WkRRL-4w0A0yIelKDc
 volumes:
   db_data:

@@ -1,5 +1,7 @@
 import * as express from "express";
 import UsuarioController from "../api/controllers/UsuarioController";
+import { authMiddleware } from "../api/middlewares/AuthMiddleware";
+
 const UsuarioRoutes = express.Router();
 
 /**
@@ -16,7 +18,7 @@ const UsuarioRoutes = express.Router();
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-UsuarioRoutes.get("/", UsuarioController.index);
+UsuarioRoutes.get("/", authMiddleware, UsuarioController.index);
 
 /**
  * Cadastrar um novo usuário
@@ -42,6 +44,18 @@ UsuarioRoutes.get("/", UsuarioController.index);
 UsuarioRoutes.post("/cadastrar", UsuarioController.create);
 
 /**
+ * Login usuário
+ * @route POST /api/usuario/login
+ * @group Usuário - Login
+ * @param {string} usuario.body.required - Usuário
+ * @param {string} senha.body.required - Senha
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+UsuarioRoutes.post("/login", UsuarioController.login);
+
+/**
  * Atualiza os dados de um usuário
  * @route PUT /api/usuario/{id}/alterar
  * @group Usuário - Atualizar
@@ -62,7 +76,7 @@ UsuarioRoutes.post("/cadastrar", UsuarioController.create);
  * @security JWT
  * @returns {object} 200 - Resposta de sucesso
  */
-UsuarioRoutes.put("/:id/alterar", UsuarioController.update);
+UsuarioRoutes.put("/:id/alterar", authMiddleware, UsuarioController.update);
 
 /**
  * Retorna a lista de agendamentos do usuario relacionado ao perfil
@@ -74,7 +88,7 @@ UsuarioRoutes.put("/:id/alterar", UsuarioController.update);
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-UsuarioRoutes.get("agendamento/", UsuarioController.listarAgendamentos);
+UsuarioRoutes.get("/agendamento", authMiddleware, UsuarioController.listarAgendamentos);
 
 /**
  * Exclui um agendamento relacionado ao usuario e seu perfil
@@ -84,6 +98,6 @@ UsuarioRoutes.get("agendamento/", UsuarioController.listarAgendamentos);
  * @security JWT
  * @returns {object} 200 - Resposta de sucesso
  */
-UsuarioRoutes.delete("agendamento/:id/excluir", UsuarioController.excluirAgendamento);
+UsuarioRoutes.delete("/agendamento/:id/excluir", authMiddleware, UsuarioController.excluirAgendamento);
 
 export { UsuarioRoutes };

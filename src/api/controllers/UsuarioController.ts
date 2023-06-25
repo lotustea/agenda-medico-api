@@ -10,6 +10,8 @@ import { UsuarioDTO } from "../dto/UsuarioDTO";
 import { ListarUsuariosUseCase } from "../../useCases/Usuario/ListarUsuariosUsecase";
 import { Usuario } from '../../entities/Usuario';
 import { ExcluirAgendamentoUsuarioUseCase } from '../../useCases/Usuario/ExcluirAgendamentoUsuarioUsecase';
+import { loginUsuarioValidation } from '../validations/Usuario/loginUsuarioValidation';
+import { LoginUsuarioUseCase } from '../../useCases/Usuario/LoginUsuarioUsecase';
 
 class UsuarioController {
     async index(req: Request, res: Response) {
@@ -60,6 +62,21 @@ class UsuarioController {
             return ApiResponse.error(res, error.errors);
         }
     }
+
+    async login(req: Request, res: Response) {
+        try {
+            const data = req.body;
+            await loginUsuarioValidation.validate(data);
+
+            const loginUsuarioUsecase =
+                await new LoginUsuarioUseCase().execute(data.usuario, data.senha);
+
+            return ApiResponse.success(res, loginUsuarioUsecase);
+        } catch (error: any) {
+            return ApiResponse.error(res, error.errors);
+        }
+    }
+
     async listarAgendamentos(req: Request, res: Response) {
         try {
             const {

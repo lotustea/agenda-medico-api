@@ -20,7 +20,7 @@ app.get("/", async (_req, res) => {
 app.use("/api", Routes);
 
 app.use((error: any, _req: any, res: any, _next: any) => {
-  if(error?.unauthorized){
+  if (error?.unauthorized) {
     return ApiResponse.error(res, { error: 'Unauthorized' }, 401);
   }
   return ApiResponse.error(res, error, 500);

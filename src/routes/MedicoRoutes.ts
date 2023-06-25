@@ -1,5 +1,6 @@
 import * as express from "express";
 import MedicoController from "../api/controllers/MedicoController";
+import { authMiddleware } from "../api/middlewares/AuthMiddleware";
 
 const MedicoRoutes = express.Router();
 
@@ -17,6 +18,6 @@ const MedicoRoutes = express.Router();
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-MedicoRoutes.get("/", MedicoController.index);
+MedicoRoutes.get("/", authMiddleware, MedicoController.index);
 
 export { MedicoRoutes };

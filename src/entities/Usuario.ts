@@ -1,15 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Exclude } from 'class-transformer';
 import { PessoaFisica } from './PessoaFisica';
 import { IUsuario } from './interfaces/IUsuario';
 
 @Entity()
-export class Usuario implements IUsuario{
+export class Usuario implements IUsuario {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
     usuario: string;
 
+    @Exclude()
     @Column()
     senha: string;
 
