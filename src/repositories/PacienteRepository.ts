@@ -3,12 +3,19 @@ import { Paciente } from "../entities/Paciente";
 import { IPacienteRepository } from "./interfaces/IPacienteRepository";
 import { IPaciente } from "../entities/interfaces/IPaciente";
 
-export class PacienteRepository extends BaseRepository<Paciente> implements IPacienteRepository {
+export class PacienteRepository
+  extends BaseRepository<Paciente>
+  implements IPacienteRepository
+{
   constructor() {
     super(Paciente);
   }
 
-  async findAll(page: number = 1, limit: number = 10, nome: string): Promise<Paciente[]> {
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    nome: string
+  ): Promise<Paciente[]> {
     const query = this._repository
       .createQueryBuilder("paciente")
       .leftJoinAndSelect("paciente.usuario", "usuario")
@@ -16,20 +23,26 @@ export class PacienteRepository extends BaseRepository<Paciente> implements IPac
       .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
       .take(limit)
       .skip((page - 1) * limit);
-  
+
     if (nome) {
-      query.where("LOWER(paciente.usuario.pessoaFisica.nome) LIKE LOWER(:nome)", {
-        nome: `%${nome}%`,
-      });
+      query.where(
+        "LOWER(paciente.usuario.pessoaFisica.nome) LIKE LOWER(:nome)",
+        {
+          nome: `%${nome}%`,
+        }
+      );
     }
-  
+
     const pacientes = await query.getMany();
-  
+
     return pacientes;
   }
-  
 
-  async count(page: number = 1, limit: number = 10, paciente: string): Promise<number> {
+  async count(
+    page: number = 1,
+    limit: number = 10,
+    paciente: string
+  ): Promise<number> {
     const query = this._repository
       .createQueryBuilder("paciente")
       .leftJoinAndSelect("paciente.usuario", "usuario")
@@ -68,7 +81,10 @@ export class PacienteRepository extends BaseRepository<Paciente> implements IPac
       throw new Error(`Paciente ${id} não encontrado.`);
     }
 
-    const pacienteAtualizado = this._repository.merge(pacienteExistente, paciente);
+    const pacienteAtualizado = this._repository.merge(
+      pacienteExistente,
+      paciente
+    );
     const updatedPaciente = await this._repository.save(pacienteAtualizado);
 
     return updatedPaciente;

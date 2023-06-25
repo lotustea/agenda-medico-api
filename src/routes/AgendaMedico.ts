@@ -8,7 +8,7 @@ const AgendaMedicoRoutes = express.Router();
  */
 /**
  * Retorna a lista de agendaAgendaMedicos
- * @route GET /api/agenda
+ * @route GET /api/agendamento
  * @group Usuário - listar
  * @param {integer} page.query - Número da página
  * @param {integer} limit.query - Limite de resultados por página
@@ -22,7 +22,7 @@ AgendaMedicoRoutes.get("/", AgendaMedicoController.index);
 
 /**
  * Cadastrar um novo agendamento
- * @route POST /api/agenda/cadastrar
+ * @route POST /api/agendamento/cadastrar
  * @group AgendaMedico - Criar
  * @param {number} pacienteId.body.required - ID do paciente
  * @param {number} medicoId.body.required - ID do medico
@@ -35,7 +35,7 @@ AgendaMedicoRoutes.post("/", AgendaMedicoController.index);
 
 /**
  * Atualiza os dados de um agendamento
- * @route PUT /api/agenda/{id}/alterar
+ * @route PUT /api/agendamento/{id}/alterar
  * @group AgendaMedico - Atualizar
  * @param {integer} id.path.required - ID do agendamento
  * @param {number} pacienteId.body- ID do paciente
@@ -45,5 +45,15 @@ AgendaMedicoRoutes.post("/", AgendaMedicoController.index);
  * @returns {object} 200 - Resposta de sucesso
  */
 AgendaMedicoRoutes.put("/:id/alterar", AgendaMedicoController.update);
+
+/**
+ * Exclui um agendamento
+ * @route DELETE /api/agendamento/{id}/excluir
+ * @group AgendaMedico - Atualizar
+ * @param {integer} id.path.required - ID do agendamento
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ */
+AgendaMedicoRoutes.delete("/:id/excluir", AgendaMedicoController.delete);
 
 export { AgendaMedicoRoutes };

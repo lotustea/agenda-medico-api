@@ -1,7 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { Medico } from './Medico';
-import { Paciente } from './Paciente';
-import { IAgendaMedico } from './interfaces/IAgendaMedico';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    CreateDateColumn,
+    UpdateDateColumn,
+    ManyToOne,
+    JoinColumn,
+} from "typeorm";
+import { Medico } from "./Medico";
+import { Paciente } from "./Paciente";
+import { IAgendaMedico } from "./interfaces/IAgendaMedico";
 
 @Entity()
 export class AgendaMedico implements IAgendaMedico {
@@ -11,11 +19,11 @@ export class AgendaMedico implements IAgendaMedico {
     @Column()
     data_agendamento: Date;
 
-    @ManyToOne(type => Medico)
+    @ManyToOne((type) => Medico)
     @JoinColumn({ name: "medico_id" })
     medico: Medico;
 
-    @ManyToOne(type => Paciente)
+    @ManyToOne((type) => Paciente)
     @JoinColumn({ name: "paciente_id" })
     paciente: Paciente;
 

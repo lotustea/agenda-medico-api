@@ -9,16 +9,28 @@ export class CadastrarAgendamentoUseCase {
     try {
       const { medico_id, data_agendamento } = data;
 
-      const horarioValido = await this.agendaMedicoService.verificarHorarioAgendamento(data_agendamento);
+      const horarioValido =
+        await this.agendaMedicoService.verificarHorarioAgendamento(
+          data_agendamento
+        );
 
       if (!horarioValido) {
-        return { error: "Horário de agendamento inválido. O horário permitido é das 08:00 às 17:00." };
+        return {
+          error:
+            "Horário de agendamento inválido. O horário permitido é das 08:00 às 17:00.",
+        };
       }
 
-      const agendamentoExistente = await this.agendaMedicoService.verificarAgendamentoExistente(medico_id, data_agendamento);
+      const agendamentoExistente =
+        await this.agendaMedicoService.verificarAgendamentoExistente(
+          medico_id,
+          data_agendamento
+        );
 
       if (agendamentoExistente) {
-        return { error: "Já existe um agendamento para o médico nesse horário." };
+        return {
+          error: "Já existe um agendamento para o médico nesse horário.",
+        };
       }
 
       const agendamentoSalvo = await this.agendaMedicoRepository.create(data);

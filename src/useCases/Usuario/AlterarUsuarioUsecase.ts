@@ -4,25 +4,25 @@ import { getPasswordHash } from "../../utils/getPasswordHash";
 import { removeUndefined } from "../../utils/removeUndefined";
 
 export class AlterarUsuarioUseCase {
-  private usuarioRepository = new UsuarioRepository();
+    private usuarioRepository = new UsuarioRepository();
 
-  async execute(id: number, usuarioData: IUsuario) {
-    try {
-      if (usuarioData.senha) {
-        usuarioData.senha = await getPasswordHash(usuarioData.senha);
-      }
-  
-      const usuarioAtualizado: IUsuario = removeUndefined(usuarioData);
+    async execute(id: number, usuarioData: IUsuario) {
+        try {
+            if (usuarioData.senha) {
+                usuarioData.senha = await getPasswordHash(usuarioData.senha);
+            }
 
-      const usuarioSalvo = await this.usuarioRepository.update(
-        id,
-        usuarioAtualizado
-      );
-  
-      return { usuario: usuarioSalvo };
-    } catch (error: any) {
-      console.log(error);
-      return { error: "Falha ao alterar usuário" };
+            const usuarioAtualizado: IUsuario = removeUndefined(usuarioData);
+
+            const usuarioSalvo = await this.usuarioRepository.update(
+                id,
+                usuarioAtualizado
+            );
+
+            return { usuario: usuarioSalvo };
+        } catch (error: any) {
+            console.log(error);
+            return { error: "Falha ao alterar usuário" };
+        }
     }
-  }
 }

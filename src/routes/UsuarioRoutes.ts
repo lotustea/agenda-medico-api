@@ -2,7 +2,6 @@ import * as express from "express";
 import UsuarioController from "../api/controllers/UsuarioController";
 const UsuarioRoutes = express.Router();
 
-
 /**
  * Rotas Usuário
  */
@@ -64,5 +63,27 @@ UsuarioRoutes.post("/cadastrar", UsuarioController.create);
  * @returns {object} 200 - Resposta de sucesso
  */
 UsuarioRoutes.put("/:id/alterar", UsuarioController.update);
+
+/**
+ * Retorna a lista de agendamentos do usuario relacionado ao perfil
+ * @route GET /api/usuario/agendamento
+ * @group Usuário - Agendamentos listar
+ * @param {Date} dataAgendamentoMin.query - Data de agendamento minima (filtro - opcional)
+ * @param {Date} dataAgendamentoMax.query - Data de agendamento maxima (filtro - opcional)
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+UsuarioRoutes.get("agendamento/", UsuarioController.listarAgendamentos);
+
+/**
+ * Exclui um agendamento relacionado ao usuario e seu perfil
+ * @route DELETE /api/usuario/agendamento/{id}/excluir
+ * @group Usuario - Excluir agendamento
+ * @param {integer} id.path.required - ID do agendamento
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ */
+UsuarioRoutes.delete("agendamento/:id/excluir", UsuarioController.excluirAgendamento);
 
 export { UsuarioRoutes };

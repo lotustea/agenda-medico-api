@@ -4,76 +4,83 @@ import { IUsuarioRepository } from "./interfaces/IUsuarioRepository";
 import { IUsuario } from "entities/interfaces/IUsuario";
 
 export class UsuarioRepository
-  extends BaseRepository<Usuario>
-  implements IUsuarioRepository
-{
-  constructor() {
-    super(Usuario);
-  }
-
-  async findAll(page: number = 1, limit: number = 10, usuario: string): Promise<Usuario[]> {
-    const query = this._repository
-      .createQueryBuilder("usuario")
-      .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
-      .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
-      .take(limit)
-      .skip((page - 1) * limit);
-
-    if (usuario) {
-      query.where("LOWER(usuario.usuario) LIKE LOWER(:usuario)", {
-        usuario: `%${usuario}%`,
-      });
+    extends BaseRepository<Usuario>
+    implements IUsuarioRepository {
+    constructor() {
+        super(Usuario);
     }
 
-    const usuarios = await query.getMany();
+    async findAll(
+        page: number = 1,
+        limit: number = 10,
+        usuario: string
+    ): Promise<Usuario[]> {
+        const query = this._repository
+            .createQueryBuilder("usuario")
+            .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
+            .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
+            .take(limit)
+            .skip((page - 1) * limit);
 
-    return usuarios;
-  }
+        if (usuario) {
+            query.where("LOWER(usuario.usuario) LIKE LOWER(:usuario)", {
+                usuario: `%${usuario}%`,
+            });
+        }
 
-  async count(page: number = 1, limit: number = 10, usuario: string): Promise<number> {
-    const query = this._repository
-      .createQueryBuilder("usuario")
-      .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
-      .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
-      .take(limit)
-      .skip((page - 1) * limit);
+        const usuarios = await query.getMany();
 
-    if (usuario) {
-      query.where("LOWER(usuario.usuario) LIKE LOWER(:usuario)", {
-        usuario: `%${usuario}%`,
-      });
+        return usuarios;
     }
 
-    return query.getCount();
-  }
+    async count(
+        page: number = 1,
+        limit: number = 10,
+        usuario: string
+    ): Promise<number> {
+        const query = this._repository
+            .createQueryBuilder("usuario")
+            .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
+            .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
+            .take(limit)
+            .skip((page - 1) * limit);
 
-  async findById(id: number): Promise<Usuario | undefined> {
-    return await this._repository
-      .createQueryBuilder("usuario")
-      .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
-      .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
-      .where("usuario.id = :id", { id })
-      .getOne();
-  }
+        if (usuario) {
+            query.where("LOWER(usuario.usuario) LIKE LOWER(:usuario)", {
+                usuario: `%${usuario}%`,
+            });
+        }
 
-  async create(usuario: Usuario): Promise<Usuario> {
-    return await this._repository.save(usuario);
-  }
-
-  async update(id: number, usuario: IUsuario): Promise<Usuario> {
-    const usuarioExistente = await this.findById(id);
-
-    if (!usuarioExistente) {
-      throw new Error(`Usuário ${id} não encontrado.`);
+        return query.getCount();
     }
 
-    const usuarioAtualizado = this._repository.merge(usuarioExistente, usuario);
-    const updatedUsuario = await this._repository.save(usuarioAtualizado);
+    async findById(id: number): Promise<Usuario | undefined> {
+        return await this._repository
+            .createQueryBuilder("usuario")
+            .leftJoinAndSelect("usuario.pessoaFisica", "pessoaFisica")
+            .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
+            .where("usuario.id = :id", { id })
+            .getOne();
+    }
 
-    return updatedUsuario;
-  }
-  async delete(id: number): Promise<boolean> {
-    const deleteResult = await this._repository.delete(id);
-    return deleteResult.affected !== 0;
-  }
+    async create(usuario: Usuario): Promise<Usuario> {
+        return await this._repository.save(usuario);
+    }
+
+    async update(id: number, usuario: IUsuario): Promise<Usuario> {
+        const usuarioExistente = await this.findById(id);
+
+        if (!usuarioExistente) {
+            throw new Error(`Usuário ${id} não encontrado.`);
+        }
+
+        const usuarioAtualizado = this._repository.merge(usuarioExistente, usuario);
+        const updatedUsuario = await this._repository.save(usuarioAtualizado);
+
+        return updatedUsuario;
+    }
+    async delete(id: number): Promise<boolean> {
+        const deleteResult = await this._repository.delete(id);
+        return deleteResult.affected !== 0;
+    }
 }

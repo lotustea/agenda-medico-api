@@ -3,12 +3,19 @@ import { Medico } from "../entities/Medico";
 import { IMedicoRepository } from "./interfaces/IMedicoRepository";
 import { IMedico } from "../entities/interfaces/IMedico";
 
-export class MedicoRepository extends BaseRepository<Medico> implements IMedicoRepository {
+export class MedicoRepository
+  extends BaseRepository<Medico>
+  implements IMedicoRepository
+{
   constructor() {
     super(Medico);
   }
 
-  async findAll(page: number = 1, limit: number = 10, nome: string): Promise<Medico[]> {
+  async findAll(
+    page: number = 1,
+    limit: number = 10,
+    nome: string
+  ): Promise<Medico[]> {
     const query = this._repository
       .createQueryBuilder("medico")
       .leftJoinAndSelect("medico.usuario", "usuario")
@@ -16,20 +23,23 @@ export class MedicoRepository extends BaseRepository<Medico> implements IMedicoR
       .leftJoinAndSelect("pessoaFisica.endereco", "endereco")
       .take(limit)
       .skip((page - 1) * limit);
-  
+
     if (nome) {
       query.where("LOWER(medico.usuario.pessoaFisica.nome) LIKE LOWER(:nome)", {
         nome: `%${nome}%`,
       });
     }
-  
+
     const medicos = await query.getMany();
-  
+
     return medicos;
   }
-  
 
-  async count(page: number = 1, limit: number = 10, medico: string): Promise<number> {
+  async count(
+    page: number = 1,
+    limit: number = 10,
+    medico: string
+  ): Promise<number> {
     const query = this._repository
       .createQueryBuilder("medico")
       .leftJoinAndSelect("medico.usuario", "usuario")
