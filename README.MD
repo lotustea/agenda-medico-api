@@ -19,6 +19,7 @@ Esta é uma API de agendamento que permite aos usuários marcar consultas e gere
 - Nodemailer
 - Docker
 - Mailhog
+- Postman
 
 ## Configuração
 
