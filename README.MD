@@ -62,5 +62,8 @@ A interface do Mailhog esta acessivel em `http://localhost:8025/` após iniciar 
 ## Documentação da API
 A API é documentada usando utilizando JsDoc e collection Postman na raiz do projeto.
 
+## Tasks e issues
+Andamento atualizado na aba issues https://github.com/lotustea/agenda-medico-api/issues
+
 ## Gerador de cpf - para cadastrar usuarios
 `https://www.geradordecpf.org/`
