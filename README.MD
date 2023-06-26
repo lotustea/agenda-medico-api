@@ -2,8 +2,7 @@
 
 Esta é uma API de agendamento que permite aos usuários marcar consultas e gerenciar agendamentos médicos.
 
-## Recursos Principais
-
+## Funcionaliddes Principais
 - Cadastro de Usuários: permite que os usuários se cadastrem na plataforma fornecendo informações básicas e escolhendo um perfil (médico, secretária ou paciente).
 - Agendamento de Consultas: os usuários podem marcar consultas disponíveis com médicos registrados na plataforma.
 - Gerenciamento de Agendamentos: os usuários podem visualizar, atualizar e cancelar seus agendamentos existentes.
@@ -21,8 +20,14 @@ Esta é uma API de agendamento que permite aos usuários marcar consultas e gere
 - Mailhog
 - Postman
 
-## Configuração
+## Alguns Recursos
+- Autenticação via jwt
+- Recuperação de senha do usuário
+- Envio de emails em fila
+- Paginação e filtros na listagem de recursos
+- Migrations
 
+## Configuração
 Siga as etapas abaixo para configurar e executar a API em seu ambiente local:
 
 1. Clone este repositório em seu computador:
@@ -35,7 +40,8 @@ git clone git@github.com:lotustea/agenda-medico-api.git
 
 ```
 cd agenda-medico-api
-
+```
+```
 docker compose up -d --build
 ```
 
@@ -43,7 +49,8 @@ docker compose up -d --build
 
 ```
 docker-compose exec app /bin/bash
-
+```
+```
 npx typeorm-ts-node-commonjs migration:run -d src/databases/MysqlDb.ts
 ```
 
