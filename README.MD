@@ -53,4 +53,7 @@ A API estará em execução em `http://localhost:3333`.
 A interface do Mailhog esta acessivel em `http://localhost:8025/` após iniciar o servidor, para visualizar os emails capturados na aplicacao.
 
 ## Documentação da API
-A API é documentada usando utilizno JsDoc e collection Postman na raiz do projeto.
+A API é documentada usando utilizando JsDoc e collection Postman na raiz do projeto.
+
+## Gerador de cpf - para cadastrar usuarios
+`https://www.geradordecpf.org/`
