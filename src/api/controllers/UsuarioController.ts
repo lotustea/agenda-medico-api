@@ -14,7 +14,7 @@ import { loginUsuarioValidation } from '../validations/Usuario/loginUsuarioValid
 import { LoginUsuarioUseCase } from '../../useCases/Usuario/LoginUsuarioUsecase';
 import { gerarTokenRecuperarSenhaValidation } from '../validations/Usuario/gerarTokenRecuperarSenhaValidation';
 import { GerarTokenRecuperarSenhaUseCase } from '../../useCases/RecuperarSenha/GerarTokenRecuperarSenhaUseCase';
-import { RecuperarSenhaUseCase } from 'useCases/Usuario/RecuperarSenhaUsuarioUseCase';
+import { RecuperarSenhaUseCase } from '../../useCases/Usuario/RecuperarSenhaUsuarioUseCase';
 import { recuperarSenhaValidation } from '../validations/Usuario/recuperarSenhaValidation';
 
 class UsuarioController {

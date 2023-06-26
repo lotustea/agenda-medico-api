@@ -11,7 +11,7 @@ export class RecuperarSenhaRepository
   }
 
   async findByTokenAndUsuario(token: string, usuarioId: number): Promise<RecuperarSenha | undefined> {
-    return await this._repository.findOne({ where: { token, usuario_id: usuarioId } });
+    return await this._repository.findOne({ where: { token, usuario_id: usuarioId }, order: { criado_em: 'DESC' } });
   }
 
   async findByUsuario(usuarioId: number): Promise<RecuperarSenha | undefined> {

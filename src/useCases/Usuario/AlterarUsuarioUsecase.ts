@@ -8,6 +8,10 @@ export class AlterarUsuarioUseCase {
 
     async execute(id: number, usuarioData: IUsuario) {
         try {
+            const usuarioExistente = await this.usuarioRepository.findById(id);
+            if (!usuarioExistente) {
+                return { error: "Usuário não encontrado" };
+            }
             if (usuarioData.senha) {
                 usuarioData.senha = await getPasswordHash(usuarioData.senha);
             }
