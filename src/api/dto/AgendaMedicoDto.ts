@@ -1,8 +1,8 @@
-export class AgendaMedicoDTO {
+export class AgendamentoDTO {
   constructor(data: any) {
     this.medicoId = data.medicoId;
     this.pacienteId = data.pacienteId;
-    this.dataAgendamento = data.dataAgendamento;
+    this.dataAgendamento = data.dataAgendamento ? new Date(data.dataAgendamento) : undefined;
   }
 
   medicoId?: number;
@@ -13,7 +13,7 @@ export class AgendaMedicoDTO {
     return {
       medico_id: this.medicoId,
       paciente_id: this.pacienteId,
-      data_agendamento: this.dataAgendamento,
+      data_agendamento: new Date(this.dataAgendamento).toISOString().slice(0, 16),
     }
   }
 }

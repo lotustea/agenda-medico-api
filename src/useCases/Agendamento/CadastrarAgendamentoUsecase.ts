@@ -1,16 +1,17 @@
-import { AgendaMedicoRepository } from "../../repositories/AgendaMedicoRepository";
-import { AgendaMedicoService } from "../../services/AgendaMedicoService";
+import { AgendamentoRepository } from "../../repositories/AgendamentoRepository";
+import { AgendamentoService } from "../../services/AgendamentoService";
 
 export class CadastrarAgendamentoUseCase {
-  private agendaMedicoRepository = new AgendaMedicoRepository();
-  private agendaMedicoService = new AgendaMedicoService();
+  private agendamentoRepository = new AgendamentoRepository();
+  private agendamentoService = new AgendamentoService();
 
   async execute(data: any) {
     try {
       const { medico_id, data_agendamento } = data;
+      const dataAgendamento = new Date(data.data_agendamento);
 
       const horarioValido =
-        await this.agendaMedicoService.verificarHorarioAgendamento(
+        await this.agendamentoService.verificarHorarioAgendamento(
           data_agendamento
         );
 
@@ -22,9 +23,9 @@ export class CadastrarAgendamentoUseCase {
       }
 
       const agendamentoExistente =
-        await this.agendaMedicoService.verificarAgendamentoExistente(
+        await this.agendamentoService.verificarAgendamentoExistente(
           medico_id,
-          data_agendamento
+          dataAgendamento
         );
 
       if (agendamentoExistente) {
@@ -33,7 +34,10 @@ export class CadastrarAgendamentoUseCase {
         };
       }
 
-      const agendamentoSalvo = await this.agendaMedicoRepository.create(data);
+      const agendamentoSalvo = await this.agendamentoRepository.create({
+        ...data,
+        data_agendamento: dataAgendamento.toISOString().slice(0, 19)
+      });
 
       return agendamentoSalvo;
     } catch (error: any) {

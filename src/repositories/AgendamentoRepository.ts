@@ -1,28 +1,28 @@
 import { BaseRepository } from "./BaseRepository";
-import { AgendaMedico } from "../entities/AgendaMedico";
-import { IAgendaMedicoRepository } from "./interfaces/IAgendaMedicoRepository";
-import { IAgendaMedico } from "../entities/interfaces/IAgendaMedico";
+import { Agendamento } from "../entities/Agendamento";
+import { IAgendamentoRepository } from "./interfaces/IAgendamentoRepository";
+import { IAgendamento } from "../entities/interfaces/IAgendamento";
 
-export class AgendaMedicoRepository
-    extends BaseRepository<AgendaMedico>
-    implements IAgendaMedicoRepository {
+export class AgendamentoRepository
+    extends BaseRepository<Agendamento>
+    implements IAgendamentoRepository {
     constructor() {
-        super(AgendaMedico);
+        super(Agendamento);
     }
 
     async findAll(
         page: number = 1,
         limit: number = 10,
-        dataAgendamentoMin: Date,
-        dataAgendamentoMax: Date
-    ): Promise<AgendaMedico[]> {
+        dataAgendamentoMin: Date | null,
+        dataAgendamentoMax: Date | null
+    ): Promise<Agendamento[]> {
         const query = this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.medico", "medico")
             .leftJoinAndSelect("medico.usuario", "medicoUsuario")
             .leftJoinAndSelect("medicoUsuario.pessoaFisica", "medicoPessoaFisica")
             .leftJoinAndSelect("medicoPessoaFisica.endereco", "medicoEndereco")
-            .leftJoinAndSelect("agendaMedico.paciente", "paciente")
+            .leftJoinAndSelect("agendamento.paciente", "paciente")
             .leftJoinAndSelect("paciente.usuario", "pacienteUsuario")
             .leftJoinAndSelect("pacienteUsuario.pessoaFisica", "pacientePessoaFisica")
             .leftJoinAndSelect("pacientePessoaFisica.endereco", "pacienteEndereco")
@@ -30,82 +30,82 @@ export class AgendaMedicoRepository
             .skip((page - 1) * limit);
 
         if (dataAgendamentoMin) {
-            query.andWhere("agendaMedico.dataAgendamento >= :dataAgendamentoMin", {
-                dataAgendamentoMin,
+            query.andWhere("agendamento.data_agendamento >= :dataAgendamentoMin", {
+                dataAgendamentoMin: dataAgendamentoMin.toISOString().slice(0, 19)
             });
         }
 
         if (dataAgendamentoMax) {
-            query.andWhere("agendaMedico.dataAgendamento <= :dataAgendamentoMax", {
-                dataAgendamentoMax,
+            query.andWhere("agendamento.data_agendamento <= :dataAgendamentoMax", {
+                dataAgendamentoMax: dataAgendamentoMax.toISOString().slice(0, 19)
             });
         }
 
-        const agendaMedicos = await query.getMany();
+        const agendamentos = await query.getMany();
 
-        return agendaMedicos;
+        return agendamentos;
     }
 
     async findAllByMedico(
         medicoId: number,
         dataAgendamentoMin: Date,
         dataAgendamentoMax: Date
-    ): Promise<AgendaMedico[]> {
+    ): Promise<Agendamento[]> {
         const query = this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
-            .leftJoinAndSelect("agendaMedico.paciente", "paciente")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.medico", "medico")
+            .leftJoinAndSelect("agendamento.paciente", "paciente")
             .leftJoinAndSelect("paciente.usuario", "pacienteUsuario")
             .leftJoinAndSelect("pacienteUsuario.pessoaFisica", "pacientePessoaFisica")
             .leftJoinAndSelect("pacientePessoaFisica.endereco", "pacienteEndereco")
             .where("medico.id = :medicoId", { medicoId });
 
         if (dataAgendamentoMin) {
-            query.andWhere("agendaMedico.dataAgendamento >= :dataAgendamentoMin", {
+            query.andWhere("agendamento.dataAgendamento >= :dataAgendamentoMin", {
                 dataAgendamentoMin,
             });
         }
 
         if (dataAgendamentoMax) {
-            query.andWhere("agendaMedico.dataAgendamento <= :dataAgendamentoMax", {
+            query.andWhere("agendamento.dataAgendamento <= :dataAgendamentoMax", {
                 dataAgendamentoMax,
             });
         }
 
-        const agendaMedicos = await query.getMany();
+        const agendamentos = await query.getMany();
 
-        return agendaMedicos;
+        return agendamentos;
     }
 
     async findAllByPaciente(
         pacienteId: number,
         dataAgendamentoMin: Date,
         dataAgendamentoMax: Date
-    ): Promise<AgendaMedico[]> {
+    ): Promise<Agendamento[]> {
         const query = this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.paciente", "paciente")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.paciente", "paciente")
+            .leftJoinAndSelect("agendamento.medico", "medico")
             .leftJoinAndSelect("medico.usuario", "medicoUsuario")
             .leftJoinAndSelect("medicoUsuario.pessoaFisica", "medicoPessoaFisica")
             .leftJoinAndSelect("medicoPessoaFisica.endereco", "medicoEndereco")
             .where("paciente.id = :pacienteId", { pacienteId });
 
         if (dataAgendamentoMin) {
-            query.andWhere("agendaMedico.dataAgendamento >= :dataAgendamentoMin", {
+            query.andWhere("agendamento.data_agendamento >= :dataAgendamentoMin", {
                 dataAgendamentoMin,
             });
         }
 
         if (dataAgendamentoMax) {
-            query.andWhere("agendaMedico.dataAgendamento <= :dataAgendamentoMax", {
+            query.andWhere("agendamento.data_agendamento <= :dataAgendamentoMax", {
                 dataAgendamentoMax,
             });
         }
 
-        const agendaMedicos = await query.getMany();
+        const agendamentos = await query.getMany();
 
-        return agendaMedicos;
+        return agendamentos;
     }
 
     async count(
@@ -115,12 +115,12 @@ export class AgendaMedicoRepository
         dataAgendamentoMax: Date
     ): Promise<number> {
         const query = this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.medico", "medico")
             .leftJoinAndSelect("medico.usuario", "medicoUsuario")
             .leftJoinAndSelect("medicoUsuario.pessoaFisica", "medicoPessoaFisica")
             .leftJoinAndSelect("medicoPessoaFisica.endereco", "medicoEndereco")
-            .leftJoinAndSelect("agendaMedico.paciente", "paciente")
+            .leftJoinAndSelect("agendamento.paciente", "paciente")
             .leftJoinAndSelect("paciente.usuario", "pacienteUsuario")
             .leftJoinAndSelect("pacienteUsuario.pessoaFisica", "pacientePessoaFisica")
             .leftJoinAndSelect("pacientePessoaFisica.endereco", "pacienteEndereco")
@@ -128,13 +128,13 @@ export class AgendaMedicoRepository
             .skip((page - 1) * limit);
 
         if (dataAgendamentoMin) {
-            query.andWhere("agendaMedico.dataAgendamento >= :dataAgendamentoMin", {
+            query.andWhere("agendamento.data_agendamento >= :dataAgendamentoMin", {
                 dataAgendamentoMin,
             });
         }
 
         if (dataAgendamentoMax) {
-            query.andWhere("agendaMedico.dataAgendamento <= :dataAgendamentoMax", {
+            query.andWhere("agendamento.data_agendamento <= :dataAgendamentoMax", {
                 dataAgendamentoMax,
             });
         }
@@ -142,31 +142,31 @@ export class AgendaMedicoRepository
         return query.getCount();
     }
 
-    async findById(id: number): Promise<AgendaMedico | undefined> {
+    async findById(id: number): Promise<Agendamento | undefined> {
         return await this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.medico", "medico")
             .leftJoinAndSelect("medico.usuario", "medicoUsuario")
             .leftJoinAndSelect("medicoUsuario.pessoaFisica", "medicoPessoaFisica")
             .leftJoinAndSelect("medicoPessoaFisica.endereco", "medicoEndereco")
-            .leftJoinAndSelect("agendaMedico.paciente", "paciente")
+            .leftJoinAndSelect("agendamento.paciente", "paciente")
             .leftJoinAndSelect("paciente.usuario", "pacienteUsuario")
             .leftJoinAndSelect("pacienteUsuario.pessoaFisica", "pacientePessoaFisica")
             .leftJoinAndSelect("pacientePessoaFisica.endereco", "pacienteEndereco")
-            .where("agendaMedico.id = :id", { id })
+            .where("agendamento.id = :id", { id })
             .getOne();
     }
 
     async findByMedicoAndData(
         medicoId: number,
         dataAgendamento: Date
-    ): Promise<AgendaMedico | undefined> {
+    ): Promise<Agendamento | undefined> {
         return await this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.medico", "medico")
             .where("medico.id = :medicoId", { medicoId })
-            .andWhere("agendaMedico.dataAgendamento = :dataAgendamento", {
-                dataAgendamento,
+            .andWhere("DATE_FORMAT(agendamento.data_agendamento, '%Y-%m-%d %H:%i') = :dataAgendamento", {
+                dataAgendamento: dataAgendamento.toISOString().slice(0, 19)
             })
             .getOne();
     }
@@ -174,47 +174,47 @@ export class AgendaMedicoRepository
     async findByIdAndMedico(
         id: number,
         medicoId: number
-    ): Promise<AgendaMedico | undefined> {
+    ): Promise<Agendamento | undefined> {
         return await this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.medico", "medico")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.medico", "medico")
             .where("medico.id = :medicoId", { medicoId })
-            .andWhere("agendaMedico.id = :id", { id })
+            .andWhere("agendamento.id = :id", { id })
             .getOne();
     }
 
     async findByIdAndPaciente(
         id: number,
         pacienteId: number
-    ): Promise<AgendaMedico | undefined> {
+    ): Promise<Agendamento | undefined> {
         return await this._repository
-            .createQueryBuilder("agendaMedico")
-            .leftJoinAndSelect("agendaMedico.paciente", "paciente")
+            .createQueryBuilder("agendamento")
+            .leftJoinAndSelect("agendamento.paciente", "paciente")
             .where("paciente.id = :pacienteId", { pacienteId })
-            .andWhere("agendaMedico.id = :id", { id })
+            .andWhere("agendamento.id = :id", { id })
             .getOne();
     }
 
-    async create(agendaMedico: IAgendaMedico): Promise<AgendaMedico> {
-        return await this._repository.save(agendaMedico);
+    async create(agendamento: IAgendamento): Promise<Agendamento> {
+        return await this._repository.save(agendamento);
     }
 
-    async update(id: number, agendaMedico: IAgendaMedico): Promise<AgendaMedico> {
-        const agendaMedicoExistente = await this.findById(id);
+    async update(id: number, agendamento: IAgendamento): Promise<Agendamento> {
+        const agendamentoExistente = await this.findById(id);
 
-        if (!agendaMedicoExistente) {
-            throw new Error(`AgendaMedico ${id} não encontrado.`);
+        if (!agendamentoExistente) {
+            throw new Error(`Agendamento ${id} não encontrado.`);
         }
 
-        const agendaMedicoAtualizado = this._repository.merge(
-            agendaMedicoExistente,
-            agendaMedico
+        const agendamentoAtualizado = this._repository.merge(
+            agendamentoExistente,
+            agendamento
         );
-        const updatedAgendaMedico = await this._repository.save(
-            agendaMedicoAtualizado
+        const updatedAgendamento = await this._repository.save(
+            agendamentoAtualizado
         );
 
-        return updatedAgendaMedico;
+        return updatedAgendamento;
     }
 
     async delete(id: number): Promise<boolean> {

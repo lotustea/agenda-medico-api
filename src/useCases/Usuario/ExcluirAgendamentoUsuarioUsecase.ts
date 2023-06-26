@@ -1,14 +1,14 @@
 import { Usuario } from "entities/Usuario";
-import { AgendaMedicoRepository } from "../../repositories/AgendaMedicoRepository";
+import { AgendamentoRepository } from "../../repositories/AgendamentoRepository";
 
 export class ExcluirAgendamentoUsuarioUseCase {
-  private authAgendaMedicoRepository = new AgendaMedicoRepository();
+  private authAgendamentoRepository = new AgendamentoRepository();
 
   async execute(id: number, usuario: Usuario) {
     try {
       const methodMap = {
-        medico: this.authAgendaMedicoRepository.findByIdAndMedico,
-        paciente: this.authAgendaMedicoRepository.findByIdAndPaciente,
+        medico: this.authAgendamentoRepository.findByIdAndMedico,
+        paciente: this.authAgendamentoRepository.findByIdAndPaciente,
       };
 
       const deleteMethod = methodMap[usuario.perfil];
@@ -18,13 +18,13 @@ export class ExcluirAgendamentoUsuarioUseCase {
       }
 
       const agendamento = await deleteMethod(
-        this.authAgendaMedicoRepository,
+        this.authAgendamentoRepository,
         id,
         usuario.id
       );
 
       if (agendamento) {
-        await this.authAgendaMedicoRepository.delete(id);
+        await this.authAgendamentoRepository.delete(id);
         return { message: "Agendamento excluído com sucesso" };
       }
 

@@ -1,11 +1,11 @@
-import { AgendaMedicoRepository } from "../../repositories/AgendaMedicoRepository";
+import { AgendamentoRepository } from "../../repositories/AgendamentoRepository";
 
 export class ExcluirAgendamentoUseCase {
-    private authAgendaMedicoRepository = new AgendaMedicoRepository();
+    private authAgendamentoRepository = new AgendamentoRepository();
 
     async execute(id: number) {
         try {
-            await this.authAgendaMedicoRepository.delete(id);
+            await this.authAgendamentoRepository.delete(id);
 
             return { message: "Agenda excluida com sucesso" };
         } catch (error) {

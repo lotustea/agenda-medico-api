@@ -1,8 +1,8 @@
-import { AgendaMedicoRepository } from "../../repositories/AgendaMedicoRepository";
+import { AgendamentoRepository } from "../../repositories/AgendamentoRepository";
 import { getPaginationInfo } from "../../utils/getPaginationInfo";
 
 export class ListarAgendamentosUseCase {
-    private authAgendaMedicoRepository = new AgendaMedicoRepository();
+    private authAgendamentoRepository = new AgendamentoRepository();
 
     async execute(
         page: number,
@@ -11,13 +11,13 @@ export class ListarAgendamentosUseCase {
         dataAgendamentoMax: Date
     ) {
         try {
-            const agendas = await this.authAgendaMedicoRepository.findAll(
+            const agendas = await this.authAgendamentoRepository.findAll(
                 page,
                 limit,
                 dataAgendamentoMin,
                 dataAgendamentoMax
             );
-            const count = await this.authAgendaMedicoRepository.count(
+            const count = await this.authAgendamentoRepository.count(
                 page,
                 limit,
                 dataAgendamentoMin,

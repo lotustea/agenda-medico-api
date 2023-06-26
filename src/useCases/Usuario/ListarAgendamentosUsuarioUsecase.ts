@@ -1,8 +1,8 @@
 import { Usuario } from "entities/Usuario";
-import { AgendaMedicoRepository } from "../../repositories/AgendaMedicoRepository";
+import { AgendamentoRepository } from "../../repositories/AgendamentoRepository";
 
 export class ListarAgendamentosUsuarioUseCase {
-  private authAgendaMedicoRepository = new AgendaMedicoRepository();
+  private authAgendamentoRepository = new AgendamentoRepository();
 
   async execute(
     usuario: Usuario,
@@ -11,8 +11,8 @@ export class ListarAgendamentosUsuarioUseCase {
   ) {
     try {
       const methodMap = {
-        medico: this.authAgendaMedicoRepository.findAllByMedico,
-        paciente: this.authAgendaMedicoRepository.findAllByPaciente,
+        medico: this.authAgendamentoRepository.findAllByMedico,
+        paciente: this.authAgendamentoRepository.findAllByPaciente,
       };
 
       const findAllMethod = methodMap[usuario.perfil];
@@ -21,8 +21,8 @@ export class ListarAgendamentosUsuarioUseCase {
         return { error: "Perfil inválido para listar os agendamentos" };
       }
 
-      const agendamentos = await findAllMethod.call(
-        this.authAgendaMedicoRepository,
+      const agendamentos = await findAllMethod(
+        this.authAgendamentoRepository,
         usuario.id,
         dataAgendamentoMin,
         dataAgendamentoMax

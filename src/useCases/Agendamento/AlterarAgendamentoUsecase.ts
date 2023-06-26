@@ -1,20 +1,20 @@
 import { Usuario } from "entities/Usuario";
-import { AgendaMedicoRepository } from "../../repositories/AgendaMedicoRepository";
-import { AgendaMedicoService } from "../../services/AgendaMedicoService";
+import { AgendamentoRepository } from "../../repositories/AgendamentoRepository";
+import { AgendamentoService } from "../../services/AgendamentoService";
 
 export class AlterarAgendamentoUseCase {
-  private agendaMedicoRepository = new AgendaMedicoRepository();
-  private agendaMedicoService = new AgendaMedicoService();
+  private agendamentoRepository = new AgendamentoRepository();
+  private agendamentoService = new AgendamentoService();
 
-  async execute(id: number, agendaMedicoData: any, usuario: Usuario) {
+  async execute(id: number, agendamentoData: any, usuario: Usuario) {
     try {
       if (usuario.perfil !== "paciente") {
         return { erro: "Perfil inválido para alterar agendamento" }
       }
-      const { medico_id, data_agendamento } = agendaMedicoData;
+      const { medico_id, data_agendamento } = agendamentoData;
 
       const horarioValido =
-        await this.agendaMedicoService.verificarHorarioAgendamento(
+        await this.agendamentoService.verificarHorarioAgendamento(
           data_agendamento
         );
 
@@ -26,7 +26,7 @@ export class AlterarAgendamentoUseCase {
       }
 
       const agendamentoExistente =
-        await this.agendaMedicoService.verificarAgendamentoExistente(
+        await this.agendamentoService.verificarAgendamentoExistente(
           medico_id,
           data_agendamento
         );
@@ -37,12 +37,15 @@ export class AlterarAgendamentoUseCase {
         };
       }
 
-      const agendaMedicoSalva = await this.agendaMedicoRepository.update(
+      const agendamentoSalva = await this.agendamentoRepository.update(
         id,
-        agendaMedicoData
+        {
+          ...agendamentoData,
+          data_agendamento: new Date(agendamentoData.data_agendamento).toISOString().slice(0, 19),
+        }
       );
 
-      return { agendaMedico: agendaMedicoSalva };
+      return { agendamento: agendamentoSalva };
     } catch (error: any) {
       console.log(error);
       return { error: "Falha ao alterar agendamento" };

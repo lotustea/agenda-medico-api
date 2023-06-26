@@ -1,14 +1,14 @@
 import * as express from "express";
-import AgendaMedicoController from "../api/controllers/AgendaMedicoController";
+import AgendamentoController from "../api/controllers/AgendamentoController";
 import { authMiddleware } from "../api/middlewares/authMiddleware";
 
-const AgendaMedicoRoutes = express.Router();
+const AgendamentoRoutes = express.Router();
 
 /**
- * Rotas AgendaMedico
+ * Rotas Agendamento
  */
 /**
- * Retorna a lista de agendaAgendaMedicos
+ * Retorna a lista de agendaAgendamentos
  * @route GET /api/agendamento
  * @group Usuário - listar
  * @param {integer} page.query - Número da página
@@ -19,12 +19,12 @@ const AgendaMedicoRoutes = express.Router();
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-AgendaMedicoRoutes.get("/", authMiddleware, AgendaMedicoController.index);
+AgendamentoRoutes.get("/", authMiddleware, AgendamentoController.index);
 
 /**
  * Cadastrar um novo agendamento
  * @route POST /api/agendamento/cadastrar
- * @group AgendaMedico - Criar
+ * @group Agendamento - Criar
  * @param {number} pacienteId.body.required - ID do paciente
  * @param {number} medicoId.body.required - ID do medico
  * @param {Date} dataAgendamento.body.required - Data e hora do agendamento
@@ -32,12 +32,12 @@ AgendaMedicoRoutes.get("/", authMiddleware, AgendaMedicoController.index);
  * @returns {object} 200 - Resposta de sucesso
  * @returns {object} 500 - Erro interno
  */
-AgendaMedicoRoutes.post("/", authMiddleware, AgendaMedicoController.index);
+AgendamentoRoutes.post("/cadastrar", authMiddleware, AgendamentoController.create);
 
 /**
  * Atualiza os dados de um agendamento
  * @route PUT /api/agendamento/{id}/alterar
- * @group AgendaMedico - Atualizar
+ * @group Agendamento - Atualizar
  * @param {integer} id.path.required - ID do agendamento
  * @param {number} pacienteId.body- ID do paciente
  * @param {number} medicoId.body - ID do medico
@@ -45,16 +45,16 @@ AgendaMedicoRoutes.post("/", authMiddleware, AgendaMedicoController.index);
  * @security JWT
  * @returns {object} 200 - Resposta de sucesso
  */
-AgendaMedicoRoutes.put("/:id/alterar", authMiddleware, AgendaMedicoController.update);
+AgendamentoRoutes.put("/:id/alterar", authMiddleware, AgendamentoController.update);
 
 /**
  * Exclui um agendamento
  * @route DELETE /api/agendamento/{id}/excluir
- * @group AgendaMedico - Atualizar
+ * @group Agendamento - Atualizar
  * @param {integer} id.path.required - ID do agendamento
  * @security JWT
  * @returns {object} 200 - Resposta de sucesso
  */
-AgendaMedicoRoutes.delete("/:id/excluir", authMiddleware, AgendaMedicoController.delete);
+AgendamentoRoutes.delete("/:id/excluir", authMiddleware, AgendamentoController.delete);
 
-export { AgendaMedicoRoutes };
+export { AgendamentoRoutes };

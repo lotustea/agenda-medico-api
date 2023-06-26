@@ -1,34 +1,34 @@
-import { AgendaMedico } from "../../entities/AgendaMedico";
+import { Agendamento } from "../../entities/Agendamento";
 
-export interface IAgendaMedicoRepository {
+export interface IAgendamentoRepository {
     findAll(
         page: number,
         limit: number,
         dataAgendamentoMin: Date,
         dataAgendamentoMax: Date
-    ): Promise<AgendaMedico[]>;
+    ): Promise<Agendamento[]>;
     findAllByMedico(
         medicoId: number,
         dataAgendamentoMin: Date,
         dataAgendamentoMax: Date
-    ): Promise<AgendaMedico[]>;
+    ): Promise<Agendamento[]>;
     findAllByPaciente(
         pacienteId: number,
         dataAgendamentoMin: Date,
         dataAgendamentoMax: Date
-    ): Promise<AgendaMedico[]>;
-    findById(id: number): Promise<AgendaMedico | undefined>;
+    ): Promise<Agendamento[]>;
+    findById(id: number): Promise<Agendamento | undefined>;
     findByMedicoAndData(
         medicoId: number,
         dataAgendamento: Date
-    ): Promise<AgendaMedico | undefined>;
-    create(agendaMedico: AgendaMedico): Promise<AgendaMedico>;
+    ): Promise<Agendamento | undefined>;
+    create(agendamento: Agendamento): Promise<Agendamento>;
     count(
         page: number,
         limit: number,
         dataAgendamentoMin: Date,
         dataAgendamentoMax: Date
     ): Promise<Number>;
-    update(id: number, agendaMedico: AgendaMedico): Promise<AgendaMedico>;
+    update(id: number, agendamento: Agendamento): Promise<Agendamento>;
     delete(id: number): Promise<boolean>;
 }
