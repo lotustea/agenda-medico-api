@@ -1,0 +1,480 @@
+{
+	"info": {
+		"_postman_id": "4cb99391-5802-471a-9de5-c1e744e8cb2e",
+		"name": "Agenda medico API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22654269",
+		"_collection_link": "https://lively-satellite-64282.postman.co/workspace/Team-Workspace~e16dd21c-7f74-4da2-8d02-39c686f3f56e/collection/22654269-4cb99391-5802-471a-9de5-c1e744e8cb2e?action=share&creator=22654269&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Lista de usuarios",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/usuario?page=1&limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"usuario"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"usuario\": \"jhonduepaciente\",\n\t\"senha\": \"strongPassword123\",\n\t\"perfil\": \"paciente\",\n\t\"cpf\": \"837.736.612-66\",\n\t\"dataNascimento\": \"1980-07-25\",\n\t\"nome\": \"John\",\n\t\"sobrenome\": \"Due\",\n\t\"email\": \"jhondue@example.com\",\n\t\"logradouro\": \"Rua Exemplo\",\n\t\"numero\": \"123\",\n\t\"cep\": \"01000-000\",\n\t\"cidade\": \"São Paulo\",\n\t\"estado\": \"SP\"\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/usuario/cadastrar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"usuario",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar usuario",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"usuario\": \"jhondue\",\n\t\"senha\": \"strongPassword123\",\n\t\"perfil\": \"secretaria\",\n\t\"cpf\": \"123.456.789-00\",\n\t\"dataNascimento\": \"1980-07-25\",\n\t\"nome\": \"John\",\n\t\"sobrenome\": \"Due\",\n\t\"email\": \"jhondue@example.com\",\n\t\"logradouro\": \"Rua Exemplo\",\n\t\"numero\": \"123\",\n\t\"cep\": \"01000-000\",\n\t\"cidade\": \"São Paulo\",\n\t\"estado\": \"SP\"\n}\n"
+						},
+						"url": {
+							"raw": "{{url}}/usuario/1/alterar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"usuario",
+								"1",
+								"alterar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"usuario\": \"jhonduepaciente\",\n\t\"senha\": \"strongPassword123\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/usuario/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"usuario",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gerar token recuperar senha",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"usuario\": \"jhondue\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/usuario/gerarTokenRecuperarSenha",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"usuario",
+								"gerarTokenRecuperarSenha"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recuperar senha",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"usuario\": \"jhondue\",\n\t\"senha\": \"example\",\n\t\"token\": \"8E6D1EB8\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/usuario/recuperarSenha",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"usuario",
+								"recuperarSenha"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medico",
+			"item": [
+				{
+					"name": "Lista medicos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/medico?page=1&limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"medico"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Paciente",
+			"item": [
+				{
+					"name": "Lista pacientes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/paciente?page=1&limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"paciente"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Agenda",
+			"item": [
+				{
+					"name": "Lista agendamentos",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/agendamento?page=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"agendamento"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "2"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Visualiza agendamento",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/agendamento/1/visualizar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"agendamento",
+								"1",
+								"visualizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cria agendamento",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"medicoId\": 1,\n\t\"pacienteId\": 1,\n\t\"dataAgendamento\": \"2023-06-26 17:00\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/agendamento/cadastrar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"agendamento",
+								"cadastrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Altera agendamento",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"medicoId\": 1,\n\t\"pacienteId\": 1,\n\t\"dataAgendamento\": \"2023-06-26 11:00\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/agendamento/:id/alterar",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"agendamento",
+								":id",
+								"alterar"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Exclui agendamento",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer YOUR_JWT_TOKEN"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/agendamento/:id/excluir",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"agendamento",
+								":id",
+								"excluir"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNjg3Nzg5NjkzLCJleHAiOjE2ODc3OTMyOTN9.8ciNsBWv7fqyNZTc-TcMKroGDeg7iB0eVIs7kkKoGcg",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost:3333/api",
+			"type": "string"
+		}
+	]
+}
