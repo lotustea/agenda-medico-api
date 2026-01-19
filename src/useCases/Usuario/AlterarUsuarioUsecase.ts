@@ -25,7 +25,6 @@ export class AlterarUsuarioUseCase {
 
             return { usuario: usuarioSalvo };
         } catch (error: any) {
-            console.log(error);
             return { error: "Falha ao alterar usuário" };
         }
     }

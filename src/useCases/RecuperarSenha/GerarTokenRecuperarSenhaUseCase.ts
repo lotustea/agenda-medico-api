@@ -40,7 +40,6 @@ export class GerarTokenRecuperarSenhaUseCase {
 
       return { message: 'Token gerado com sucesso' };
     } catch (error: any) {
-      console.log(error);
       return { error: "Falha ao gerar token" };
     }
   }

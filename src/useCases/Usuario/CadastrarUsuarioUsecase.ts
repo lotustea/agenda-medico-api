@@ -15,7 +15,7 @@ export class CadastrarUsuarioUseCase {
 
   async execute(data: any) {
     try {
-      const { usuario, senha, perfil, pessoaFisica } = data;
+      const { usuario, senha, perfil, pessoaFisica, especialidade, enfermidade } = data;
       const hashSenha = await getPasswordHash(senha);
 
       const usuarioExistente = await this.usuarioRepository.findByUsuario(usuario);
@@ -33,14 +33,14 @@ export class CadastrarUsuarioUseCase {
         paciente: async () => {
           const paciente: IPaciente = {
             usuario: usuarioSalvo,
-            enfermidade: 'Enxaqueca', //TO DO: Implementar enfermidades
+            enfermidade: enfermidade,
           };
           await this.pacienteRepository.create(paciente);
         },
         medico: async () => {
           const medico: IMedico = {
             usuario: usuarioSalvo,
-            especialidade: 'Neurologista', //TO DO: Implementar especialidades
+            especialidade: especialidade,
           };
           await this.medicoRepository.create(medico);
         }

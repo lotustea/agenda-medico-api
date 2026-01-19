@@ -103,6 +103,17 @@ UsuarioRoutes.post("/recuperarSenha", UsuarioController.recuperarSenha);
 UsuarioRoutes.put("/:id/alterar", authMiddleware, UsuarioController.update);
 
 /**
+ * Exclui um usuário
+ * @route DELETE /api/usuario/{id}/excluir
+ * @group Usuário - Excluir
+ * @param {integer} id.path.required - ID do usuário
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+UsuarioRoutes.delete("/:id/excluir", authMiddleware, UsuarioController.delete);
+
+/**
  * Retorna a lista de agendamentos do usuario relacionado ao perfil
  * @route GET /api/usuario/agendamento
  * @group Usuário - Agendamentos listar

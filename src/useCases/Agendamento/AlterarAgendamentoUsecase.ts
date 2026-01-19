@@ -9,7 +9,7 @@ export class AlterarAgendamentoUseCase {
   async execute(id: number, agendamentoData: any, usuario: Usuario) {
     try {
       if (usuario.perfil !== "paciente") {
-        return { erro: "Perfil inválido para alterar agendamento" }
+        return { error: "Perfil inválido para alterar agendamento" }
       }
       const { medico_id, data_agendamento } = agendamentoData;
 
@@ -47,7 +47,6 @@ export class AlterarAgendamentoUseCase {
 
       return { agendamento: agendamentoSalva };
     } catch (error: any) {
-      console.log(error);
       return { error: "Falha ao alterar agendamento" };
     }
   }

@@ -41,7 +41,6 @@ export class CadastrarAgendamentoUseCase {
 
       return agendamentoSalvo;
     } catch (error: any) {
-      console.log(error);
       return { error: "Falha ao cadastrar agendamento" };
     }
   }

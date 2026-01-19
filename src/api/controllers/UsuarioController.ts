@@ -10,6 +10,7 @@ import { UsuarioDTO } from "../dto/UsuarioDTO";
 import { ListarUsuariosUseCase } from "../../useCases/Usuario/ListarUsuariosUsecase";
 import { Usuario } from '../../entities/Usuario';
 import { ExcluirAgendamentoUsuarioUseCase } from '../../useCases/Usuario/ExcluirAgendamentoUsuarioUsecase';
+import { ExcluirUsuarioUseCase } from '../../useCases/Usuario/ExcluirUsuarioUsecase';
 import { loginUsuarioValidation } from '../validations/Usuario/loginUsuarioValidation';
 import { LoginUsuarioUseCase } from '../../useCases/Usuario/LoginUsuarioUsecase';
 import { gerarTokenRecuperarSenhaValidation } from '../validations/Usuario/gerarTokenRecuperarSenhaValidation';
@@ -137,6 +138,19 @@ class UsuarioController {
                 await new ExcluirAgendamentoUsuarioUseCase().execute(id, usuario);
 
             return ApiResponse.success(res, excluirAgendamentoUseCase);
+        } catch (error: any) {
+            return ApiResponse.error(res, error.errors);
+        }
+    }
+
+    async delete(req: Request, res: Response) {
+        try {
+            const id = req.params.id as unknown as number;
+
+            const excluirUsuarioUseCase =
+                await new ExcluirUsuarioUseCase().execute(id);
+
+            return ApiResponse.success(res, excluirUsuarioUseCase);
         } catch (error: any) {
             return ApiResponse.error(res, error.errors);
         }

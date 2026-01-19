@@ -20,4 +20,14 @@ export const cadastrarUsuarioValidation = yup.object().shape({
   cep: yup.string().required().label('CEP'),
   cidade: yup.string().required().label('Cidade'),
   estado: yup.string().required().label('Estado'),
+  especialidade: yup.string().when('perfil', {
+    is: 'medico',
+    then: (schema) => schema.required().label('Especialidade'),
+    otherwise: (schema) => schema.optional(),
+  }),
+  enfermidade: yup.string().when('perfil', {
+    is: 'paciente',
+    then: (schema) => schema.required().label('Enfermidade'),
+    otherwise: (schema) => schema.optional(),
+  }),
 });

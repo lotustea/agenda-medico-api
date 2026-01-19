@@ -8,6 +8,7 @@ import { AlterarAgendamentoUseCase } from "../../useCases/Agendamento/AlterarAge
 import { alterarAgendamentoValidation } from "../validations/Agendamento/alterarAgendamentoValidation";
 import { cadastrarAgendamentoValidation } from "../validations/Agendamento/cadastrarAgendamentoValidation";
 import { ExcluirAgendamentoUseCase } from "../../useCases/Agendamento/ExcluirAgendamentoUsecase";
+import { VisualizarAgendaUseCase } from "../../useCases/Agendamento/VisualizarAgendamentoUsecase";
 import { Usuario } from "entities/Usuario";
 
 class AgendamentoController {
@@ -73,6 +74,19 @@ class AgendamentoController {
                 await new ExcluirAgendamentoUseCase().execute(id);
 
             return ApiResponse.success(res, excluirAgendamentoUseCase);
+        } catch (error: any) {
+            return ApiResponse.error(res, error.errors);
+        }
+    }
+
+    async show(req: Request, res: Response) {
+        try {
+            const id = req.params.id as unknown as number;
+
+            const visualizarAgendaUseCase =
+                await new VisualizarAgendaUseCase().execute(id);
+
+            return ApiResponse.success(res, visualizarAgendaUseCase);
         } catch (error: any) {
             return ApiResponse.error(res, error.errors);
         }

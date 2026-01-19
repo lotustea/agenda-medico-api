@@ -17,7 +17,6 @@ export class FastQueueWorker {
   }
 
   private async processJob(job: any): Promise<any> {
-    console.log('Processando job', job);
     return 'success';
   }
 

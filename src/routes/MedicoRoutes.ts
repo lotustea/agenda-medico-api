@@ -20,4 +20,38 @@ const MedicoRoutes = express.Router();
  */
 MedicoRoutes.get("/", authMiddleware, MedicoController.index);
 
+/**
+ * Visualizar um médico específico
+ * @route GET /api/medico/{id}/visualizar
+ * @group Medico - Visualizar
+ * @param {integer} id.path.required - ID do médico
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+MedicoRoutes.get("/:id/visualizar", authMiddleware, MedicoController.show);
+
+/**
+ * Atualiza os dados de um médico
+ * @route PUT /api/medico/{id}/alterar
+ * @group Medico - Atualizar
+ * @param {integer} id.path.required - ID do médico
+ * @param {string} especialidade.body - Especialidade do médico
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+MedicoRoutes.put("/:id/alterar", authMiddleware, MedicoController.update);
+
+/**
+ * Exclui um médico
+ * @route DELETE /api/medico/{id}/excluir
+ * @group Medico - Excluir
+ * @param {integer} id.path.required - ID do médico
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+MedicoRoutes.delete("/:id/excluir", authMiddleware, MedicoController.delete);
+
 export { MedicoRoutes };

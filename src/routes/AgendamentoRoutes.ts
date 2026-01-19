@@ -22,6 +22,17 @@ const AgendamentoRoutes = express.Router();
 AgendamentoRoutes.get("/", authMiddleware, AgendamentoController.index);
 
 /**
+ * Visualizar um agendamento específico
+ * @route GET /api/agendamento/{id}/visualizar
+ * @group Agendamento - Visualizar
+ * @param {integer} id.path.required - ID do agendamento
+ * @security JWT
+ * @returns {object} 200 - Resposta de sucesso
+ * @returns {object} 500 - Erro interno
+ */
+AgendamentoRoutes.get("/:id/visualizar", authMiddleware, AgendamentoController.show);
+
+/**
  * Cadastrar um novo agendamento
  * @route POST /api/agendamento/cadastrar
  * @group Agendamento - Criar
