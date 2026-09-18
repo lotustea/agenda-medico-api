@@ -5,8 +5,7 @@ import { IEndereco } from "entities/interfaces/IEndereco";
 
 export class EnderecoRepository
   extends BaseRepository<Endereco>
-  implements IEnderecoRepository
-{
+  implements IEnderecoRepository {
   constructor() {
     super(Endereco);
   }
